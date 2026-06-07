@@ -2,12 +2,24 @@ const express = require("express");
 
 const app = express();
 
-app.use("/test", (req, res) => {
-    res.send("testtt")
+app.get("/user", (req, res) => {
+    res.send("GET request to the user page")
 })
 
-app.use("/home", (req, res) => {
-    res.send("homeee")
+app.post("/user", (req, res) => {
+    res.send("POST request to the user page")
+})
+
+app.patch("/user", (req, res) => {
+    res.send("PATCH request to the user page")
+})
+
+app.delete("/user", (req, res) => {
+    res.send("DELETE request to the user page")
+})
+
+app.use("/", (req, res) => {
+    res.send("dashboard page")
 })
 
 app.listen(3000, () => {
