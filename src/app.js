@@ -1,15 +1,15 @@
 const express = require("express");
 const app = express();
-const { adminAuthMiddleware } = require("./middlewares/auth");
 
-app.use("/admin", adminAuthMiddleware);
-
-app.get("/admin/list", (req, res) => {
-  res.send("Admin list");
+app.get("/user/getUserData", (req, res) => {
+  throw new Error("Something went wrong!");
+  res.send("This will not be reached.");
 });
 
-app.get("/admin/data", (req, res) => {
-  res.send("Admin data");
+app.use("/", (err, req, res, next) => {
+  if (err) {
+    res.status(500).send("An error occurred: " + err.message);
+  }
 });
 
 app.listen(3000, () => {
