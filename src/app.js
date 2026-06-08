@@ -1,27 +1,17 @@
 const express = require("express");
-
 const app = express();
+const { adminAuthMiddleware } = require("./middlewares/auth");
 
-app.get("/user", (req, res) => {
-    res.send("GET request to the user page")
-})
+app.use("/admin", adminAuthMiddleware);
 
-app.post("/user", (req, res) => {
-    res.send("POST request to the user page")
-})
+app.get("/admin/list", (req, res) => {
+  res.send("Admin list");
+});
 
-app.patch("/user", (req, res) => {
-    res.send("PATCH request to the user page")
-})
-
-app.delete("/user", (req, res) => {
-    res.send("DELETE request to the user page")
-})
-
-app.use("/", (req, res) => {
-    res.send("dashboard page")
-})
+app.get("/admin/data", (req, res) => {
+  res.send("Admin data");
+});
 
 app.listen(3000, () => {
-    console.log('Server is running on port 3000...')
+  console.log("Server is running on port 3000...");
 });
