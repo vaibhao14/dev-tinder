@@ -47,6 +47,22 @@ app.get("/feed", async (req, res) => {
   }
 });
 
+app.get("/findById", async (req, res) => {
+  const id = req.body._id;
+
+  try {
+    const userId = await User.find({ _id: id });
+    if (userId.length === 0) {
+      res.send("No user found");
+    } else {
+      res.send(userId);
+    }
+  } catch (error) {
+    console.log("No user id error", error.message);
+    res.status(500).send("No user id available");
+  }
+});
+
 connectDB()
   .then(() => {
     console.log("Connected to MongoDB...");
