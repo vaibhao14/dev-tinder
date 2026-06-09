@@ -63,6 +63,54 @@ app.get("/findById", async (req, res) => {
   }
 });
 
+app.delete("/user", async (req, res) => {
+  const id = req.body.userId;
+
+  try {
+    await User.findByIdAndDelete({ _id: id });
+    res.send("User deleted successfully");
+  } catch (error) {
+    console.log("No user id error", error.message);
+    res.status(500).send("No user id available");
+  }
+});
+
+// Updating the user with id
+// app.patch("/user", async (req, res) => {
+//   const userId = req.body.userId;
+//   const updatedData = req.body;
+
+//   try {
+//     const updatedUser = await User.findByIdAndUpdate(
+//       { _id: userId },
+//       updatedData,
+//       { returnDocument: "after" },
+//     );
+//     res.send(updatedUser);
+//   } catch (error) {
+//     console.log("No user id error", error.message);
+//     res.status(500).send("No user id available");
+//   }
+// });
+
+// Updating the user with EMAIL
+app.patch("/user", async (req, res) => {
+  const email = req.body.emailId;
+  const updatedData = req.body;
+
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { emailId: email },
+      updatedData,
+      { returnDocument: "after" },
+    );
+    res.send(updatedUser);
+  } catch (error) {
+    console.log("No user id error", error.message);
+    res.status(500).send("No user id available");
+  }
+});
+
 connectDB()
   .then(() => {
     console.log("Connected to MongoDB...");
