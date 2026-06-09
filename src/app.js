@@ -17,6 +17,36 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+app.get("/user", async (req, res) => {
+  const userEmailId = req.body.emailId;
+
+  try {
+    const user = await User.find({ emailId: userEmailId });
+    if (user.length === 0) {
+      res.send("User not found");
+    } else {
+      res.send(user);
+    }
+  } catch (error) {
+    console.log("Error fetching user", error.message);
+    res.status(500).send("Error fetching user");
+  }
+});
+
+app.get("/feed", async (req, res) => {
+  try {
+    const userFeed = await User.find({});
+    if (userFeed.length === 0) {
+      res.send("No feed");
+    } else {
+      res.send(userFeed);
+    }
+  } catch (error) {
+    console.log("feed api error", error.message);
+    res.status(500).send("No feed available");
+  }
+});
+
 connectDB()
   .then(() => {
     console.log("Connected to MongoDB...");
